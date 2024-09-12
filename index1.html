@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Battery and LED Circuit</title>
+  <style>
+    /* Define variables using CSS custom properties */
+    :root {
+      --led-on-color: #f00;
+      --led-off-color: #333;
+      --battery-on-color: #0f0;
+      --battery-off-color: #555;
+      --wire-color: #000;
+    }
+
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .circuit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .battery {
+      width: 50px;
+      height: 120px;
+      background-color: var(--battery-off-color);
+      border: 2px solid #333;
+      position: relative;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .battery::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      width: 20px;
+      height: 10px;
+      background-color: #333;
+      border-radius: 2px;
+    }
+
+    /* Add text on the battery */
+    .battery::after {
+      content: "AAA 1.5V"; /* Battery text */
+      position: absolute;
+      top: 50%; /* Vertically center */
+      left: 50%; /* Horizontally center */
+      transform: translate(-50%, -50%); /* Adjust positioning */
+      font-size: 12px;
+      color: white;
+      writing-mode: vertical-rl; /* Display text vertically */
+      text-orientation: mixed; /* Ensure numbers display correctly */
+      letter-spacing: 3px; /* Add some space between letters */
+    }
+
+    .battery.on {
+      background-color: var(--battery-on-color);
+      box-shadow: 0 0 20px var(--battery-on-color);
+    }
+
+    .wire {
+      width: 2px;
+      height: 50px;
+      background-color: var(--wire-color);
+    }
+
+    .led {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-top: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
+
+    .led.on {
+      background-color: var(--led-on-color);
+      box-shadow: 0 0 20px var(--led-on-color);
+    }
+
+    .led.off {
+      background-color: var(--led-off-color);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="circuit">
+    <div class="battery"></div>
+    <div class="wire"></div>
+    <div class="led off"></div> <!-- Initially LED is off -->
+  </div>
+
+  <script>
+    // Select the LED element
+    const led = document.querySelector('.led');
+
+    // Select the battery element
+    const battery = document.querySelector('.battery');
+
+    // Add a click event listener to toggle the LED on and off
+    led.addEventListener('click', function() {
+      led.classList.toggle('on');
+      led.classList.toggle('off');
+    });
+
+    // Add a click event listener to toggle the battery on and off
+    battery.addEventListener('click', function() {
+      battery.classList.toggle('on');
+    });
+  </script>
+
+</body>
+</html>
