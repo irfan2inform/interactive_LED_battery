@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Battery and LED Circuit</title>
+  <title>Interactive Battery and LED Circuit with Zoom</title>
   <style>
-    /* Define variables using CSS custom properties */
     :root {
       --led-on-color: #f00;
       --led-off-color: #333;
@@ -21,6 +20,15 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
+    }
+
+    .circuit-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: scale(1); /* Default scale */
+      transition: transform 0.2s ease; /* Smooth zoom transition */
     }
 
     .circuit {
@@ -52,7 +60,6 @@
       border-radius: 2px;
     }
 
-    /* Add text on the battery */
     .battery::after {
       content: "AAA 1.5V"; /* Battery text */
       position: absolute;
@@ -98,10 +105,12 @@
 </head>
 <body>
 
-  <div class="circuit">
-    <div class="battery"></div>
-    <div class="wire"></div>
-    <div class="led off"></div> <!-- Initially LED is off -->
+  <div class="circuit-container">
+    <div class="circuit">
+      <div class="battery"></div>
+      <div class="wire"></div>
+      <div class="led off"></div> <!-- Initially LED is off -->
+    </div>
   </div>
 
   <script>
@@ -110,6 +119,11 @@
 
     // Select the battery element
     const battery = document.querySelector('.battery');
+
+    // Select the circuit container for zooming
+    const circuitContainer = document.querySelector('.circuit-container');
+
+    let scale = 1; // Initial scale
 
     // Add a click event listener to toggle the LED on and off
     led.addEventListener('click', function() {
@@ -120,6 +134,20 @@
     // Add a click event listener to toggle the battery on and off
     battery.addEventListener('click', function() {
       battery.classList.toggle('on');
+    });
+
+    // Add an event listener for scrolling to zoom in and out
+    window.addEventListener('wheel', function(event) {
+      if (event.deltaY < 0) {
+        // Scroll up - zoom in
+        scale += 0.1;
+      } else {
+        // Scroll down - zoom out
+        scale = Math.max(0.5, scale - 0.1); // Ensure scale doesn't go below 0.5
+      }
+
+      // Apply the scaling to the circuit
+      circuitContainer.style.transform = `scale(${scale})`;
     });
   </script>
 
